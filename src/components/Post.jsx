@@ -23,6 +23,14 @@ export const Post = () => {
                 <p><a href="https://rocketseat.com.br">Site da Rocketeat</a></p>
                 <p><a href="https://eduardomms01.github.io/dark-mode-presentation/">Meu portfólio completo</a></p>
             </div>
+
+            <form className={styles.commentForm}>
+                <textarea placeholder='Deixe seu comentário' />
+
+                <footer>
+                    <button type='submit'>Comentar</button>
+                </footer>
+            </form>
         </article>
     )
 }
