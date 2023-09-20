@@ -85,7 +85,7 @@
     color: var(--gray-100);
 }
 
-.commentForm > textarea {
+.commentForm textarea {
     width: 100%;
     background: var(--gray-900);
     border: none;
@@ -95,7 +95,7 @@
     border-radius: 8px;
     color: var(--gray-100);
     line-height: 1.4;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
 }
 
 .commentForm footer {
@@ -117,9 +117,13 @@
     color: var(--white);
     font-weight: bold;
     cursor: pointer;
-    transition: background .1s;
+    transition: background-color .1s;
 }
 
 .commentForm button[type=submit]:hover {
     background-color: var(--green-300);
+}
+
+.commentList {
+    margin-top: 2rem;
 }
