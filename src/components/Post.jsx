@@ -2,28 +2,44 @@ import styles from './Post.module.css'
 import { Comment } from './Comment'
 import { Avatar } from './Avatar'
 
-export const Post = () => {
+export const Post = ({ author, publishedAt, content }) => {
+
+    const publishedDateFormat = new Intl.DateTimeFormat('pt-BR', {
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    }).format(publishedAt)
+
     return (
         <article className={styles.post}>
             <header>
                 <div className={styles.author}>
-                    <Avatar hasMarginTop src="https://github.com/eduardomms01.png" />
+                    <Avatar src={author.avatarUrl} />
                     <div className={styles.authorInfo}>
-                        <strong>Eduardo Marinho</strong>
-                        <span>Full Stack Developer</span>
+                        <strong>{author.name}</strong>
+                        <span>{author.role}</span>
                     </div>
                 </div>
 
-                <time title='18 de Setembro às 11:58h' dateTime='2023-09-18 11:58:00'>
-                    Publicado há 1 hora
+                <time>
+                    {publishedDateFormat}
                 </time>
             </header>
 
             <div className={styles.content}>
-                <p>E ai pessoal!</p>
-                <p>Este é mais um projeto que aprendi no curso Ignite da Rocketseat!</p>
-                <p><a href="https://rocketseat.com.br">Site da Rocketeat</a></p>
-                <p><a href="https://eduardomms01.github.io/dark-mode-presentation/">Meu portfólio completo</a></p>
+                {content.map(item => {
+                    if (item.type === "paragraph") {
+                        return (
+                            <p>{item.content}</p>
+                        )
+                    } else if (item.type === "link") {
+                        return (
+                            <p><a href={item.anchor} target='_blank'>{item.content}</a></p>
+                        )
+                    }
+                })}
             </div>
 
             <form className={styles.commentForm}>
