@@ -1,8 +1,15 @@
 import styles from './Post.module.css'
 import { Comment } from './Comment'
 import { Avatar } from './Avatar'
+import { useState } from 'react'
 
 export const Post = ({ author, publishedAt, content }) => {
+
+    const [comments, setComments] = useState([
+        "Post muito bacana!!"
+    ])
+
+    const [newCommentText, setNewCommentText] = useState('')
 
     const publishedDateFormat = new Intl.DateTimeFormat('pt-BR', {
         day: '2-digit',
@@ -11,6 +18,26 @@ export const Post = ({ author, publishedAt, content }) => {
         hour: '2-digit',
         minute: '2-digit'
     }).format(publishedAt)
+
+
+    function handleNewComments (e) {
+        e.preventDefault()
+
+        setComments([...comments, newCommentText])
+        setNewCommentText('')
+    }
+
+    function handleNewCommentChange () {
+        setNewCommentText(event.target.value)
+    }
+
+    function deleteComment (commentToDelete) {
+        const commentsWithoutDeletedOne = commentToDele.filter(comment => {
+            comments !== commentToDelete
+        })
+
+        setComments(commentsWithoutDeletedOne)
+    }
 
     return (
         <article className={styles.post}>
@@ -32,18 +59,22 @@ export const Post = ({ author, publishedAt, content }) => {
                 {content.map(item => {
                     if (item.type === "paragraph") {
                         return (
-                            <p>{item.content}</p>
+                            <p key={item.content}>{item.content}</p>
                         )
                     } else if (item.type === "link") {
                         return (
-                            <p><a href={item.anchor} target='_blank'>{item.content}</a></p>
+                            <p key={item.content}><a href={item.anchor} target='_blank'>{item.content}</a></p>
                         )
                     }
                 })}
             </div>
 
-            <form className={styles.commentForm}>
-                <textarea placeholder='Deixe seu comentário :)' />
+            <form onSubmit={handleNewComments} className={styles.commentForm}>
+                <textarea 
+                    onChange={handleNewCommentChange} 
+                    value={newCommentText} name='comment' 
+                    placeholder='Deixe seu comentário :)' 
+                />
 
                 <footer>
                     <button type='submit'>Comentar</button>
@@ -51,9 +82,11 @@ export const Post = ({ author, publishedAt, content }) => {
             </form>
 
             <div className={styles.commentList}>
-                <Comment />
-                <Comment />
-                <Comment />
+                {comments.map(item => {
+                    return (
+                        <Comment key={item} content={item} onDeleteComment={deleteComment}/>
+                    )
+                })}
             </div>
         </article>
     )
