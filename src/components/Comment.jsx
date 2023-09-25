@@ -18,7 +18,7 @@ export const Comment = ({ content, onDeleteComment }) => {
                             <time title='18 de Setembro às 19:22:00' dateTime='2023-09-18 19:23:00'>Cerca de 1h atrás</time>
                         </div>
 
-                        <button onChange={handleDeleteComment} title='Deletar'>
+                        <button onClick={handleDeleteComment} title='Deletar'>
                             <Trash size={24} />
                         </button>
                     </header>

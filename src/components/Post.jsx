@@ -22,22 +22,23 @@ export const Post = ({ author, publishedAt, content }) => {
 
     function handleNewComments (e) {
         e.preventDefault()
-
         setComments([...comments, newCommentText])
         setNewCommentText('')
     }
 
-    function handleNewCommentChange () {
-        setNewCommentText(event.target.value)
+    function handleNewCommentChange (e) {
+        setNewCommentText(e.target.value)
     }
 
-    function deleteComment (commentToDelete) {
-        const commentsWithoutDeletedOne = commentToDele.filter(comment => {
-            comments !== commentToDelete
+    function deleteComment (itemToDelete) {
+        const commentsWithoutDeletedOne = comments.filter(item => {
+            return item !== itemToDelete
         })
 
         setComments(commentsWithoutDeletedOne)
     }
+
+    const isNewCommentEmpty = newCommentText.length === 0
 
     return (
         <article className={styles.post}>
@@ -77,7 +78,7 @@ export const Post = ({ author, publishedAt, content }) => {
                 />
 
                 <footer>
-                    <button type='submit'>Comentar</button>
+                    <button type='submit' disabled={isNewCommentEmpty}>Comentar</button>
                 </footer>
             </form>
 
